@@ -1,34 +1,29 @@
-import React, { Component } from "react";
-import PropTypes from 'prop-types';
-import './tasks_filter.css';
+import React, { Component } from 'react'
 
+import './tasks_filter.css'
 
 export default class TasksFilter extends Component {
+  render() {
+    const { onClickFilters } = this.props
 
-    static defaultProps = {
-        onClickFilters: () => {}
-    };
+    return (
+      <ul className="filters" onClick={onClickFilters} aria-hidden="true">
+        <li>
+          <button className="selected" type="button">
+            All
+          </button>
+        </li>
+        <li>
+          <button type="button">Active</button>
+        </li>
+        <li>
+          <button type="button">Completed</button>
+        </li>
+      </ul>
+    )
+  }
+}
 
-    static propTypes = {
-        onClickFilters: PropTypes.func.isRequired
-    };
-
-    render() {
-        const { onClickFilters } = this.props;
-
-        return (
-            <ul className="filters" onClick = {onClickFilters}>
-                <li>
-                    <button className="selected">All</button>
-                </li>
-                <li>
-                    <button>Active</button>
-                </li>
-                <li>
-                    <button>Completed</button>
-                </li>
-            </ul>
-        );
-    };
-};
-
+TasksFilter.defaultProps = {
+  onClickFilters: () => {},
+}

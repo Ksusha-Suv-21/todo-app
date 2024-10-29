@@ -32,6 +32,7 @@
       "semi": ["error", "never"],
       "react/react-in-jsx-scope": "off",
       "react/prop-types": 0,
+      "react/destructuring-assignment": 0,
       "import/no-unresolved": [2, { "caseSensitive": false }],
       "import/named": "error",
       "import/namespace": "error",
@@ -42,7 +43,14 @@
       "react/jsx-uses-vars": "error",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
-      "jsx-a11y/rule-name": 2,
+      "react/state-in-constructor": 0,
+      "no-restricted-syntax": 0,
+      "no-plusplus": 0,
+      "react/sort-comp": 0,
+      "jsx-a11y/no-autofocus": 0,
+      "react/prefer-stateless-function": 0,
+      "react/jsx-props-no-spreading": 0,
+      "no-param-reassign": 0,
       "import/order": [
         2,
         {
