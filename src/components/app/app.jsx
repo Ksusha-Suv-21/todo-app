@@ -21,7 +21,6 @@ export default class App extends Component {
       id: this.maxId++,
       created,
       time: new Date(),
-      checked: false,
     }
   }
 
@@ -51,15 +50,17 @@ export default class App extends Component {
 
   onToggleCompleted = (id) => {
     this.setState(({ todoData }) => {
-      const idIndex = todoData.findIndex((el) => el.id === id)
-
-      const oldTask = todoData[idIndex]
-      const newTask = { ...oldTask, completed: !oldTask.completed }
-
-      const newArray = [...todoData.slice(0, idIndex), newTask, ...todoData.slice(idIndex + 1)]
-
+      const newDataStream = todoData.map((el) => {
+        if (el.id === id) {
+          return {
+            ...el,
+            completed: !el.completed,
+          }
+        }
+        return el
+      })
       return {
-        todoData: newArray,
+        todoData: newDataStream,
       }
     })
   }
@@ -138,6 +139,19 @@ export default class App extends Component {
     }
   };
 
+onToggleCompleted = (id) => {
+    this.setState(({ todoData }) => {
+      const idIndex = todoData.findIndex((el) => el.id === id)
 
+      const oldTask = todoData[idIndex]
+      const newTask = { ...oldTask, completed: !oldTask.completed }
+
+      const newArray = [...todoData.slice(0, idIndex), newTask, ...todoData.slice(idIndex + 1)]
+
+      return {
+        todoData: newArray,
+      }
+    })
+  }
   
 */
