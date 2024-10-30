@@ -6,7 +6,7 @@ import './task.css'
 
 export default class Task extends Component {
   render() {
-    const { label, onDeleted, onToggleCompleted, completed } = this.props
+    const { label, onDeleted, onToggleCompleted, completed, time } = this.props
 
     let classNames = ''
 
@@ -20,7 +20,7 @@ export default class Task extends Component {
           <input className="toggle" type="checkbox" onClick={onToggleCompleted} />
           <label htmlFor="span">
             <span className="description">{label}</span>
-            <span className="created">created {formatDistanceToNow(new Date())} ago</span>
+            <span className="created">created {formatDistanceToNow(time)} ago</span>
           </label>
           <button className="icon icon-edit" aria-label="edit" type="button" />
           <button className="icon icon-destroy" onClick={onDeleted} aria-label="destroy" type="button" />

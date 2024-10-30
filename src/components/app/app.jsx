@@ -10,11 +10,7 @@ export default class App extends Component {
   maxId = 1
 
   state = {
-    todoData: [
-      this.createTask('Drink Coffee', new Date()),
-      this.createTask('Make ToDo App', new Date()),
-      this.createTask('Learn React', new Date()),
-    ],
+    todoData: [],
     filter: 'all',
   }
 
@@ -24,6 +20,8 @@ export default class App extends Component {
       completed: false,
       id: this.maxId++,
       created,
+      time: new Date(),
+      checked: false,
     }
   }
 
@@ -40,7 +38,7 @@ export default class App extends Component {
   }
 
   addTask = (label) => {
-    const newItem = this.createTask(label, Date.now())
+    const newItem = this.createTask(label)
 
     this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem]
@@ -68,7 +66,7 @@ export default class App extends Component {
 
   onDeletedAll = () => {
     this.setState(({ todoData }) => {
-      const newArr = todoData.filter((el) => el.completed === false)
+      const newArr = todoData.filter((el) => !el.completed)
 
       return {
         todoData: newArr,
@@ -96,7 +94,7 @@ export default class App extends Component {
   render() {
     const { todoData, filter } = this.state
 
-    const completedCount = todoData.filter((el) => el.completed).length
+    const completedCount = todoData.filter((el) => !el.completed).length
     const todoCount = todoData.length - completedCount
 
     return (
@@ -139,4 +137,7 @@ export default class App extends Component {
         return items;
     }
   };
+
+
+  
 */

@@ -30,6 +30,8 @@ export default class NewTaskForm extends Component {
           autoFocus
           onChange={this.onLabelChange}
           value={this.state.label}
+          required
+          pattern="^[^\s]+(\s.*)?$"
         />
       </form>
     )
