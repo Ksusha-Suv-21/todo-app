@@ -86,8 +86,7 @@ export default class App extends Component {
   render() {
     const { todoData, filter } = this.state
 
-    const completedCount = todoData.filter((el) => el.completed).length
-    const todoCount = todoData.length - completedCount
+    const completedCount = todoData.filter((el) => !el.completed).length
 
     return (
       <section className="todoapp">
@@ -105,7 +104,7 @@ export default class App extends Component {
 
           <Footer
             onDeletedAll={this.onDeletedAll}
-            toDo={todoCount}
+            toDo={completedCount}
             completed={completedCount}
             onClickFilters={this.onClickFilters}
             filter={filter}
