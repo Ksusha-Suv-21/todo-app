@@ -6,7 +6,7 @@ import './task.css'
 
 export default class Task extends Component {
   render() {
-    const { label, onDeleted, onToggleCompleted, completed, time } = this.props
+    const { label, onDeleted, onToggleCompleted, completed, time, inputId } = this.props
 
     let classNames = ''
 
@@ -17,8 +17,8 @@ export default class Task extends Component {
     return (
       <li className={classNames}>
         <div className="view">
-          <input className="toggle" type="checkbox" onClick={onToggleCompleted} id="chek" />
-          <label htmlFor="chek">
+          <input className="toggle" type="checkbox" checked={completed} onClick={onToggleCompleted} id={inputId} />
+          <label htmlFor={inputId}>
             <span className="description">{label}</span>
             <span className="created">created {formatDistanceToNow(time)} ago</span>
           </label>

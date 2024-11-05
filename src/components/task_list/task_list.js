@@ -6,40 +6,30 @@ import Task from '../task'
 import './task_list.css'
 
 function TaskList({ todos, onDeleted = () => {}, onToggleCompleted = () => {}, filter }) {
-  let elements
+  const elements = todos.map((item) => {
+    const { id, ...itemProps } = item
 
-  const taskTemplate = () => {
-    elements = todos.map((item) => {
-      const { id, ...itemProps } = item
+    return (
+      <Task
+        {...itemProps}
+        key={item.id}
+        onDeleted={() => onDeleted(id)}
+        onToggleCompleted={() => onToggleCompleted(id)}
+      />
+    )
+  })
+  const preperElements = elements.filter((el) => {
+    if (filter === 'active') {
+      return !el.props.completed
+    }
+    if (filter === 'completed') {
+      return el.props.completed
+    }
 
-      return (
-        <Task
-          {...itemProps}
-          key={item.id}
-          onDeleted={() => onDeleted(id)}
-          onToggleCompleted={() => onToggleCompleted(id)}
-        />
-      )
-    })
-  }
+    return true
+  })
 
-  if (filter === 'all') {
-    taskTemplate()
-  }
-
-  if (filter === 'active') {
-    todos = todos.filter((el) => !el.completed)
-
-    taskTemplate()
-  }
-
-  if (filter === 'completed') {
-    todos = todos.filter((el) => el.completed)
-
-    taskTemplate()
-  }
-
-  return <ul className="todo-list">{elements}</ul>
+  return <ul className="todo-list">{preperElements}</ul>
 }
 
 TaskList.propTypes = {

@@ -4,20 +4,42 @@ import './tasks_filter.css'
 
 export default class TasksFilter extends Component {
   render() {
-    const { onClickFilters } = this.props
+    const { onClickFilters, filter } = this.props
 
     return (
-      <ul className="filters" onClick={onClickFilters} aria-hidden="true">
+      <ul className="filters">
         <li>
-          <button className="selected" type="button">
+          <button
+            className={filter === 'all' ? 'selected' : ''}
+            type="button"
+            onClick={() => {
+              onClickFilters('all')
+            }}
+          >
             All
           </button>
         </li>
         <li>
-          <button type="button">Active</button>
+          <button
+            className={filter === 'active' ? 'selected' : ''}
+            type="button"
+            onClick={() => {
+              onClickFilters('active')
+            }}
+          >
+            Active
+          </button>
         </li>
         <li>
-          <button type="button">Completed</button>
+          <button
+            className={filter === 'completed' ? 'selected' : ''}
+            type="button"
+            onClick={() => {
+              onClickFilters('completed')
+            }}
+          >
+            Completed
+          </button>
         </li>
       </ul>
     )

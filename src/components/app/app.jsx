@@ -19,6 +19,7 @@ export default class App extends Component {
       label,
       completed: false,
       id: this.maxId++,
+      inputId: `taskInputId${this.maxId}`,
       created,
       time: new Date(),
     }
@@ -50,17 +51,15 @@ export default class App extends Component {
 
   onToggleCompleted = (id) => {
     this.setState(({ todoData }) => {
-      const newDataStream = todoData.map((el) => {
-        if (el.id === id) {
-          return {
-            ...el,
-            completed: !el.completed,
-          }
-        }
-        return el
-      })
+      const idIndex = todoData.findIndex((el) => el.id === id)
+
+      const oldTask = todoData[idIndex]
+      const newTask = { ...oldTask, completed: !oldTask.completed }
+
+      const newArray = [...todoData.slice(0, idIndex), newTask, ...todoData.slice(idIndex + 1)]
+
       return {
-        todoData: newDataStream,
+        todoData: newArray,
       }
     })
   }
@@ -75,17 +74,9 @@ export default class App extends Component {
     })
   }
 
-  onClickFilters = (e) => {
+  onClickFilters = (type) => {
     this.setState(() => {
-      const filterValue = e.target.innerText.toLowerCase()
-      const filtersList = document.querySelector('.filters')
-      const filterItems = filtersList.querySelectorAll('button')
-
-      for (const filter of filterItems) {
-        filter.classList.remove('selected')
-      }
-      e.target.classList.add('selected')
-
+      const filterValue = type
       return {
         filter: filterValue,
       }
@@ -95,7 +86,7 @@ export default class App extends Component {
   render() {
     const { todoData, filter } = this.state
 
-    const completedCount = todoData.filter((el) => !el.completed).length
+    const completedCount = todoData.filter((el) => el.completed).length
     const todoCount = todoData.length - completedCount
 
     return (
@@ -117,41 +108,10 @@ export default class App extends Component {
             toDo={todoCount}
             completed={completedCount}
             onClickFilters={this.onClickFilters}
+            filter={filter}
           />
         </section>
       </section>
     )
   }
 }
-
-/*
-  filter = (items, filter) => {
-
-    switch (filter) { 
-      case 'all':
-        return items;
-      case 'active':
-        return items.filter((item) => !item.completed); 
-      case 'completed':
-        return items.filter((item) => item.completed);
-      default:
-        return items;
-    }
-  };
-
-onToggleCompleted = (id) => {
-    this.setState(({ todoData }) => {
-      const idIndex = todoData.findIndex((el) => el.id === id)
-
-      const oldTask = todoData[idIndex]
-      const newTask = { ...oldTask, completed: !oldTask.completed }
-
-      const newArray = [...todoData.slice(0, idIndex), newTask, ...todoData.slice(idIndex + 1)]
-
-      return {
-        todoData: newArray,
-      }
-    })
-  }
-  
-*/

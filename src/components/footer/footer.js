@@ -5,11 +5,11 @@ import TasksFilter from '../tasks_filter'
 
 import './footer.css'
 
-function Footer({ toDo, onDeletedAll = () => {}, onClickFilters = () => {} }) {
+function Footer({ toDo, onDeletedAll = () => {}, onClickFilters = () => {}, filter }) {
   return (
     <footer className="footer">
       <span className="todo-count">{toDo} items left</span>
-      <TasksFilter onClickFilters={(e) => onClickFilters(e)} />
+      <TasksFilter onClickFilters={onClickFilters} filter={filter} />
       <button className="clear-completed" onClick={onDeletedAll} type="button">
         Clear completed
       </button>
