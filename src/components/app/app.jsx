@@ -75,11 +75,19 @@ export default class App extends Component {
   }
 
   onClickFilters = (type) => {
-    this.setState(() => {
-      const filterValue = type
-      return {
-        filter: filterValue,
+    this.setState({ filter: type })
+  }
+
+  filterTask = () => {
+    const { todoData, filter } = this.state
+    return todoData.filter((el) => {
+      if (filter === 'active') {
+        return !el.completed
       }
+      if (filter === 'completed') {
+        return el.completed
+      }
+      return true
     })
   }
 
@@ -96,7 +104,7 @@ export default class App extends Component {
         </header>
         <section className="main">
           <TaskList
-            todos={todoData}
+            todos={this.filterTask()}
             filter={filter}
             onDeleted={this.deleteTask}
             onToggleCompleted={this.onToggleCompleted}
@@ -105,7 +113,6 @@ export default class App extends Component {
           <Footer
             onDeletedAll={this.onDeletedAll}
             toDo={completedCount}
-            completed={completedCount}
             onClickFilters={this.onClickFilters}
             filter={filter}
           />
