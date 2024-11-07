@@ -6,20 +6,13 @@ import Task from '../task'
 import './task_list.css'
 
 function TaskList({ todos, onDeleted = () => {}, onToggleCompleted = () => {} }) {
-  const elements = todos.map((item) => {
-    const { id, ...itemProps } = item
-
-    return (
-      <Task
-        {...itemProps}
-        key={item.id}
-        onDeleted={() => onDeleted(id)}
-        onToggleCompleted={() => onToggleCompleted(id)}
-      />
-    )
-  })
-
-  return <ul className="todo-list">{elements}</ul>
+  return (
+    <ul className="todo-list">
+      {todos.map((item) => (
+        <Task key={item.id} onDeleted={onDeleted} onToggleCompleted={onToggleCompleted} item={item} />
+      ))}
+    </ul>
+  )
 }
 
 TaskList.propTypes = {

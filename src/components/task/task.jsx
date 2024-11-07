@@ -6,7 +6,9 @@ import './task.css'
 
 export default class Task extends Component {
   render() {
-    const { label, onDeleted, onToggleCompleted, completed, time, inputId } = this.props
+    const { onDeleted, onToggleCompleted, item } = this.props
+
+    const { completed = false, label, inputId, time } = item
 
     let classNames = ''
 
@@ -17,7 +19,13 @@ export default class Task extends Component {
     return (
       <li className={classNames}>
         <div className="view">
-          <input className="toggle" type="checkbox" checked={completed} onClick={onToggleCompleted} id={inputId} />
+          <input
+            className="toggle"
+            type="checkbox"
+            defaultChecked={completed}
+            onClick={() => onToggleCompleted(item.id)}
+            id={inputId}
+          />
           <label htmlFor={inputId}>
             <span className="description">{label}</span>
             <span className="created">created {formatDistanceToNow(time)} ago</span>
@@ -33,37 +41,9 @@ export default class Task extends Component {
 Task.defaultProps = {
   onDeleted: () => {},
   onToggleCompleted: () => {},
-  completed: false,
 }
 
 Task.propTypes = {
   onDeleted: PropTypes.func,
   onToggleCompleted: PropTypes.func,
-  completed: PropTypes.bool,
-  label: PropTypes.node.isRequired,
 }
-
-/*
-const TodoListItem = (props) => {
-    return <span>{ props.label }</span>
-};
-
-
-onSpanClick = () => {
-  this.setState((state) => {
-    return {
-      completed: !state.completed
-    };
-  });
-};
-
-
-
-  onSpanClick = () => {
-    this.setState(({ completed }) => {
-      return {
-        completed: !completed
-      };
-    });
-  };
-*/

@@ -54,6 +54,7 @@ export default class App extends Component {
       const idIndex = todoData.findIndex((el) => el.id === id)
 
       const oldTask = todoData[idIndex]
+
       const newTask = { ...oldTask, completed: !oldTask.completed }
 
       const newArray = [...todoData.slice(0, idIndex), newTask, ...todoData.slice(idIndex + 1)]
