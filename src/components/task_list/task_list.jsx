@@ -9,7 +9,7 @@ function TaskList({ todos, onDeleted = () => {}, onToggleCompleted = () => {} })
   return (
     <ul className="todo-list">
       {todos.map((item) => (
-        <Task key={item.id} onDeleted={onDeleted} onToggleCompleted={onToggleCompleted} item={item} />
+        <Task key={item.id} onDeleted={() => onDeleted(item.id)} onToggleCompleted={onToggleCompleted} item={item} />
       ))}
     </ul>
   )
