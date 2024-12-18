@@ -27,7 +27,12 @@ export default class Task extends Component {
             id={inputId}
           />
           <label htmlFor={inputId}>
-            <span className="description">{label}</span>
+            <span className="title">{label}</span>
+            <span className="description">
+              <button className="icon icon-play" aria-label="play" type="button" />
+              <button className="icon icon-pause" aria-label="pause" type="button" />
+              <span className="time">00:00</span>
+            </span>
             <span className="created">created {formatDistanceToNow(time)} ago</span>
           </label>
           <button className="icon icon-edit" aria-label="edit" type="button" />

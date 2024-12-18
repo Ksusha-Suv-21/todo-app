@@ -23,7 +23,7 @@ export default class NewTaskForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form className="new-todo-form" onSubmit={this.onSubmit}>
         <input
           className="new-todo"
           placeholder="What needs to be done?"
@@ -33,6 +33,9 @@ export default class NewTaskForm extends Component {
           required
           pattern="^[^\s]+(\s.*)?$"
         />
+        <input className="new-todo-form__timer" placeholder="Min" autoFocus />
+        <input className="new-todo-form__timer" placeholder="Sec" autoFocus />
+        <button className="new-todo-form__submit" type="submit" aria-label="form__submit" />
       </form>
     )
   }
