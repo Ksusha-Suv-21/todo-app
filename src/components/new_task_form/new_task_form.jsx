@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 export default class NewTaskForm extends Component {
   state = {
     label: '',
+    minutes: 0,
+    seconds: 0,
   }
 
   onLabelChange = (e) => {
@@ -13,11 +15,32 @@ export default class NewTaskForm extends Component {
     })
   }
 
+  onChangeMin = (e) => {
+    this.setState({
+      minutes: e.target.value,
+    })
+  }
+
+  onChangeSec = (e) => {
+    this.setState({
+      seconds: e.target.value,
+    })
+  }
+
   onSubmit = (e) => {
     e.preventDefault()
-    this.props.addTask(this.state.label)
+    let finelMinutes = +this.state.minutes
+    let finelSeconds = +this.state.seconds
+    if (finelSeconds >= 60) {
+      const additionalMinutes = parseInt(finelSeconds / 60, 10)
+      finelMinutes += additionalMinutes
+      finelSeconds -= additionalMinutes * 60
+    }
+    this.props.addTask(this.state.label, finelMinutes, finelSeconds)
     this.setState({
       label: '',
+      minutes: 0,
+      seconds: 0,
     })
   }
 
@@ -33,8 +56,22 @@ export default class NewTaskForm extends Component {
           required
           pattern="^[^\s]+(\s.*)?$"
         />
-        <input className="new-todo-form__timer" placeholder="Min" autoFocus />
-        <input className="new-todo-form__timer" placeholder="Sec" autoFocus />
+        <input
+          className="new-todo-form__timer"
+          placeholder="Min"
+          autoFocus
+          onChange={this.onChangeMin}
+          value={this.state.minutes === 0 ? '' : this.state.minutes}
+          pattern="[0-9]*"
+        />
+        <input
+          className="new-todo-form__timer"
+          placeholder="Sec"
+          autoFocus
+          onChange={this.onChangeSec}
+          value={this.state.seconds === 0 ? '' : this.state.seconds}
+          pattern="[0-9]*"
+        />
         <button className="new-todo-form__submit" type="submit" aria-label="form__submit" />
       </form>
     )
@@ -44,3 +81,7 @@ export default class NewTaskForm extends Component {
 NewTaskForm.propTypes = {
   addTask: PropTypes.func.isRequired,
 }
+
+/*
+ 
+*/

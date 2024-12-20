@@ -14,14 +14,16 @@ export default class App extends Component {
     filter: 'all',
   }
 
-  createTask(label, created) {
+  createTask(label, minutes, seconds) {
     return {
       label,
       completed: false,
       id: this.maxId++,
       inputId: `taskInputId${this.maxId}`,
-      created,
       time: new Date(),
+      minutes,
+      seconds,
+      timer: null,
     }
   }
 
@@ -37,8 +39,8 @@ export default class App extends Component {
     })
   }
 
-  addTask = (label) => {
-    const newItem = this.createTask(label)
+  addTask = (label, minutes, seconds) => {
+    const newItem = this.createTask(label, minutes, seconds)
 
     this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem]
@@ -92,6 +94,50 @@ export default class App extends Component {
     })
   }
 
+  taskOnPlay = (id) => {
+    const data = this.state.todoData
+
+    const idIndex = data.findIndex((el) => el.id === id)
+    const currentTodo = data[idIndex]
+
+    if (!(currentTodo.seconds === 0 && currentTodo.minutes === 0)) {
+      if (currentTodo.timer !== null) {
+        clearInterval(currentTodo.timer)
+      }
+      currentTodo.timer = setInterval(() => {
+        /* console.log(data[idIndex]) */
+        if (currentTodo.seconds > 0) {
+          this.setState(({ todoData }) => {
+            todoData[idIndex].seconds--
+            return {
+              todoData,
+            }
+          })
+        } else if (currentTodo.minutes > 0) {
+          this.setState(({ todoData }) => {
+            todoData[idIndex].seconds = 60
+            todoData[idIndex].minutes--
+            return {
+              todoData,
+            }
+          })
+        } else {
+          this.taskOnPause(idIndex)
+        }
+      }, 1000)
+    }
+  }
+
+  taskOnPause = (id) => {
+    const data = this.state.todoData
+
+    const idIndex = data.findIndex((el) => el.id === id)
+    const currentTodo = data[idIndex]
+    if (currentTodo.timer !== null) {
+      clearInterval(currentTodo.timer)
+    }
+  }
+
   render() {
     const { todoData, filter } = this.state
 
@@ -101,7 +147,7 @@ export default class App extends Component {
       <section className="todoapp">
         <header className="header">
           <h1>todos</h1>
-          <NewTaskForm addTask={this.addTask} />
+          <NewTaskForm addTask={this.addTask} addTime={this.addTime} />
         </header>
         <section className="main">
           <TaskList
@@ -109,6 +155,8 @@ export default class App extends Component {
             filter={filter}
             onDeleted={this.deleteTask}
             onToggleCompleted={this.onToggleCompleted}
+            taskOnPlay={this.taskOnPlay}
+            taskOnPause={this.taskOnPause}
           />
 
           <Footer
@@ -122,3 +170,11 @@ export default class App extends Component {
     )
   }
 }
+
+/*
+ addTime = (value) => {
+    this.setState(({ addedTime }) => ({
+      addedTime: value === 0 ? addedTime : value,
+    }))
+  }
+*/

@@ -6,14 +6,17 @@ import './task.css'
 
 export default class Task extends Component {
   render() {
-    const { onDeleted, onToggleCompleted, item } = this.props
+    const { onDeleted, onToggleCompleted, item, taskOnPlay, taskOnPause } = this.props
 
-    const { completed = false, label, inputId, time } = item
+    const { completed = false, label, inputId, time, minutes, seconds, timer } = item
 
     let classNames = ''
 
     if (completed) {
       classNames += ' completed'
+      if (timer !== null) {
+        clearInterval(timer)
+      }
     }
 
     return (
@@ -29,9 +32,9 @@ export default class Task extends Component {
           <label htmlFor={inputId}>
             <span className="title">{label}</span>
             <span className="description">
-              <button className="icon icon-play" aria-label="play" type="button" />
-              <button className="icon icon-pause" aria-label="pause" type="button" />
-              <span className="time">00:00</span>
+              <button className="icon icon-play" aria-label="play" type="button" onClick={taskOnPlay} />
+              <button className="icon icon-pause" aria-label="pause" type="button" onClick={taskOnPause} />
+              <span className="time">{`${minutes}:${seconds}`}</span>
             </span>
             <span className="created">created {formatDistanceToNow(time)} ago</span>
           </label>
