@@ -5,7 +5,13 @@ import Task from '../task'
 
 import './task_list.css'
 
-function TaskList({ todos, onDeleted = () => {}, onToggleCompleted = () => {}, addedTime, taskOnPlay, taskOnPause }) {
+function TaskList({
+  todos,
+  onDeleted = () => {},
+  onToggleCompleted = () => {},
+  taskOnPlay = () => {},
+  taskOnPause = () => {},
+}) {
   return (
     <ul className="todo-list">
       {todos.map((item) => (
@@ -14,7 +20,6 @@ function TaskList({ todos, onDeleted = () => {}, onToggleCompleted = () => {}, a
           onDeleted={() => onDeleted(item.id)}
           onToggleCompleted={onToggleCompleted}
           item={item}
-          addedTime={addedTime}
           taskOnPlay={() => taskOnPlay(item.id)}
           taskOnPause={() => taskOnPause(item.id)}
         />
@@ -26,6 +31,8 @@ function TaskList({ todos, onDeleted = () => {}, onToggleCompleted = () => {}, a
 TaskList.propTypes = {
   onDeleted: PropTypes.func.isRequired,
   onToggleCompleted: PropTypes.func.isRequired,
+  taskOnPlay: PropTypes.func.isRequired,
+  taskOnPause: PropTypes.func.isRequired,
 }
 
 export default TaskList

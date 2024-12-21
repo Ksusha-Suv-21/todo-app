@@ -81,7 +81,3 @@ export default class NewTaskForm extends Component {
 NewTaskForm.propTypes = {
   addTask: PropTypes.func.isRequired,
 }
-
-/*
- 
-*/

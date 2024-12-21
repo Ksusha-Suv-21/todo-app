@@ -49,9 +49,13 @@ export default class Task extends Component {
 Task.defaultProps = {
   onDeleted: () => {},
   onToggleCompleted: () => {},
+  taskOnPlay: () => {},
+  taskOnPause: () => {},
 }
 
 Task.propTypes = {
   onDeleted: PropTypes.func,
   onToggleCompleted: PropTypes.func,
+  taskOnPlay: PropTypes.func,
+  taskOnPause: PropTypes.func,
 }

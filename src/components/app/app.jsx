@@ -104,8 +104,8 @@ export default class App extends Component {
       if (currentTodo.timer !== null) {
         clearInterval(currentTodo.timer)
       }
+
       currentTodo.timer = setInterval(() => {
-        /* console.log(data[idIndex]) */
         if (currentTodo.seconds > 0) {
           this.setState(({ todoData }) => {
             todoData[idIndex].seconds--
@@ -133,6 +133,7 @@ export default class App extends Component {
 
     const idIndex = data.findIndex((el) => el.id === id)
     const currentTodo = data[idIndex]
+
     if (currentTodo.timer !== null) {
       clearInterval(currentTodo.timer)
     }
@@ -147,7 +148,7 @@ export default class App extends Component {
       <section className="todoapp">
         <header className="header">
           <h1>todos</h1>
-          <NewTaskForm addTask={this.addTask} addTime={this.addTime} />
+          <NewTaskForm addTask={this.addTask} />
         </header>
         <section className="main">
           <TaskList
@@ -170,11 +171,3 @@ export default class App extends Component {
     )
   }
 }
-
-/*
- addTime = (value) => {
-    this.setState(({ addedTime }) => ({
-      addedTime: value === 0 ? addedTime : value,
-    }))
-  }
-*/
