@@ -122,7 +122,7 @@ export default class App extends Component {
             }
           })
         } else {
-          clearInterval(idIndex)
+          this.taskOnPause(idIndex)
         }
       }, 1000)
     }
@@ -130,6 +130,7 @@ export default class App extends Component {
 
   /*
 } else {
+ clearInterval(idIndex)
           this.taskOnPause(idIndex)
         }
       }, 1000)
