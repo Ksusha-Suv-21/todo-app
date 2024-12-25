@@ -122,7 +122,7 @@ export default class App extends Component {
             }
           })
         } else {
-          this.taskOnPause(idIndex)
+          clearInterval(idIndex)
         }
       }, 1000)
     }
@@ -130,12 +130,11 @@ export default class App extends Component {
 
   /*
 } else {
- clearInterval(idIndex)
           this.taskOnPause(idIndex)
         }
       }, 1000)
 */
-
+  /*
   taskOnPause = (id) => {
     this.setState(({ todoData }) => {
       const idIndex = todoData.findIndex((el) => el.id === id)
@@ -147,7 +146,7 @@ export default class App extends Component {
       }
     })
   }
-  /*
+  */
   taskOnPause = (id) => {
     const data = this.state.todoData
 
@@ -158,7 +157,6 @@ export default class App extends Component {
       clearInterval(currentTodo.timer)
     }
   }
-  */
 
   render() {
     const { todoData, filter } = this.state
