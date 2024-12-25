@@ -115,28 +115,29 @@ export default class App extends Component {
           })
         } else if (currentTodo.minutes > 0) {
           this.setState(({ todoData }) => {
-            todoData[idIndex].seconds = 60
+            todoData[idIndex].seconds = 59
             todoData[idIndex].minutes--
             return {
               todoData,
             }
           })
         } else {
-          this.taskOnPause(idIndex)
+          clearInterval(idIndex)
         }
       }, 1000)
     }
   }
 
   taskOnPause = (id) => {
-    const data = this.state.todoData
+    this.setState(({ todoData }) => {
+      const idIndex = todoData.findIndex((el) => el.id === id)
 
-    const idIndex = data.findIndex((el) => el.id === id)
-    const currentTodo = data[idIndex]
+      const currentTodo = todoData[idIndex]
 
-    if (currentTodo.timer !== null) {
-      clearInterval(currentTodo.timer)
-    }
+      if (currentTodo.timer !== null) {
+        clearInterval(currentTodo.timer)
+      }
+    })
   }
 
   render() {
@@ -171,3 +172,74 @@ export default class App extends Component {
     )
   }
 }
+
+/*
+this.setState(({ todoData }) => {
+            const newData = todoData[idIndex].seconds--
+            return {
+              todoData: newData,
+            }
+          })
+
+
+
+
+
+ taskOnPlay = (id) => {
+    const data = this.state.todoData
+
+    const idIndex = data.findIndex((el) => el.id === id)
+    const currentTodo = data[idIndex]
+
+    if (!(currentTodo.seconds === 0 && currentTodo.minutes === 0)) {
+      if (currentTodo.timer !== null) {
+        clearInterval(currentTodo.timer)
+      }
+
+      currentTodo.timer = setInterval(() => {
+        if (currentTodo.seconds > 0) {
+          this.setState(({ todoData }) => {
+            todoData[idIndex].seconds--
+            return {
+              todoData,
+            }
+          })
+        } else if (currentTodo.minutes > 0) {
+          this.setState(({ todoData }) => {
+            todoData[idIndex].seconds = 59
+            todoData[idIndex].minutes--
+            return {
+              todoData,
+            }
+          })
+        } else {
+          this.taskOnPause(idIndex)
+        }
+      }, 1000)
+    }
+  }
+
+
+taskOnPause = (id) => {
+    this.setState(({ todoData }) => {
+      const idIndex = todoData.findIndex((el) => el.id === id)
+
+      const currentTodo = todoData[idIndex]
+
+      if (currentTodo.timer !== null) {
+        clearInterval(currentTodo.timer)
+      }
+    })
+  }
+
+  taskOnPause = (id) => {
+    const data = this.state.todoData
+
+    const idIndex = data.findIndex((el) => el.id === id)
+    const currentTodo = data[idIndex]
+
+    if (currentTodo.timer !== null) {
+      clearInterval(currentTodo.timer)
+    }
+  }
+*/
