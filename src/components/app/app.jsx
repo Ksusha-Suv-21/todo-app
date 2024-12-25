@@ -122,11 +122,20 @@ export default class App extends Component {
             }
           })
         } else {
+          this.taskOnPause(idIndex)
           clearInterval(idIndex)
         }
       }, 1000)
     }
   }
+
+  /*
+} else {
+ clearInterval(idIndex)
+          this.taskOnPause(idIndex)
+        }
+      }, 1000)
+*/
 
   taskOnPause = (id) => {
     this.setState(({ todoData }) => {
@@ -139,6 +148,18 @@ export default class App extends Component {
       }
     })
   }
+  /*
+  taskOnPause = (id) => {
+    const data = this.state.todoData
+
+    const idIndex = data.findIndex((el) => el.id === id)
+    const currentTodo = data[idIndex]
+
+    if (currentTodo.timer !== null) {
+      clearInterval(currentTodo.timer)
+    }
+  }
+*/
 
   render() {
     const { todoData, filter } = this.state
@@ -219,27 +240,4 @@ this.setState(({ todoData }) => {
     }
   }
 
-
-taskOnPause = (id) => {
-    this.setState(({ todoData }) => {
-      const idIndex = todoData.findIndex((el) => el.id === id)
-
-      const currentTodo = todoData[idIndex]
-
-      if (currentTodo.timer !== null) {
-        clearInterval(currentTodo.timer)
-      }
-    })
-  }
-
-  taskOnPause = (id) => {
-    const data = this.state.todoData
-
-    const idIndex = data.findIndex((el) => el.id === id)
-    const currentTodo = data[idIndex]
-
-    if (currentTodo.timer !== null) {
-      clearInterval(currentTodo.timer)
-    }
-  }
 */
