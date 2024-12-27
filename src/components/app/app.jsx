@@ -31,6 +31,9 @@ export default class App extends Component {
     this.setState(({ todoData }) => {
       const idIndex = todoData.findIndex((el) => el.id === id)
 
+      if (todoData[idIndex].timer !== null) {
+        clearInterval(todoData[idIndex].timer)
+      }
       const newArray = [...todoData.slice(0, idIndex), ...todoData.slice(idIndex + 1)]
 
       return {
@@ -108,55 +111,41 @@ export default class App extends Component {
       currentTodo.timer = setInterval(() => {
         if (currentTodo.seconds > 0) {
           this.setState(({ todoData }) => {
-            todoData[idIndex].seconds--
+            const newArr = todoData
+            newArr[idIndex].seconds--
             return {
-              todoData,
+              todoData: newArr,
             }
           })
         } else if (currentTodo.minutes > 0) {
           this.setState(({ todoData }) => {
-            todoData[idIndex].seconds = 59
-            todoData[idIndex].minutes--
+            const newArr = todoData
+            newArr[idIndex].seconds = 59
+            newArr[idIndex].minutes--
             return {
-              todoData,
+              todoData: newArr,
             }
           })
         } else {
-          this.taskOnPause(idIndex)
+          this.taskOnPause(id)
         }
       }, 1000)
     }
   }
 
-  /*
-} else {
- clearInterval(idIndex)
-          this.taskOnPause(idIndex)
-        }
-      }, 1000)
-*/
-  /*
   taskOnPause = (id) => {
     this.setState(({ todoData }) => {
-      const idIndex = todoData.findIndex((el) => el.id === id)
+      const newArr = todoData
+      const idIndex = newArr.findIndex((el) => el.id === id)
 
-      const currentTodo = todoData[idIndex]
-
-      if (currentTodo.timer !== null) {
-        clearInterval(currentTodo.timer)
+      if (newArr[idIndex].timer !== null) {
+        clearInterval(newArr[idIndex].timer)
+        newArr[idIndex].timer = null
+      }
+      return {
+        todoData: newArr,
       }
     })
-  }
-  */
-  taskOnPause = (id) => {
-    const data = this.state.todoData
-
-    const idIndex = data.findIndex((el) => el.id === id)
-    const currentTodo = data[idIndex]
-
-    if (currentTodo.timer !== null) {
-      clearInterval(currentTodo.timer)
-    }
   }
 
   render() {
@@ -193,49 +182,26 @@ export default class App extends Component {
 }
 
 /*
-this.setState(({ todoData }) => {
-            const newData = todoData[idIndex].seconds--
-            return {
-              todoData: newData,
-            }
-          })
+   taskOnPause = (id) => {
+    this.setState(({ todoData }) => {
+      const idIndex = todoData.findIndex((el) => el.id === id)
 
+      const currentTodo = todoData[idIndex]
 
+      if (currentTodo.timer !== null) {
+        clearInterval(currentTodo.timer)
+      }
+    })
+  }
 
-
-
- taskOnPlay = (id) => {
+  taskOnPause = (id) => {
     const data = this.state.todoData
 
     const idIndex = data.findIndex((el) => el.id === id)
     const currentTodo = data[idIndex]
 
-    if (!(currentTodo.seconds === 0 && currentTodo.minutes === 0)) {
-      if (currentTodo.timer !== null) {
-        clearInterval(currentTodo.timer)
-      }
-
-      currentTodo.timer = setInterval(() => {
-        if (currentTodo.seconds > 0) {
-          this.setState(({ todoData }) => {
-            todoData[idIndex].seconds--
-            return {
-              todoData,
-            }
-          })
-        } else if (currentTodo.minutes > 0) {
-          this.setState(({ todoData }) => {
-            todoData[idIndex].seconds = 59
-            todoData[idIndex].minutes--
-            return {
-              todoData,
-            }
-          })
-        } else {
-          this.taskOnPause(idIndex)
-        }
-      }, 1000)
+    if (currentTodo.timer !== null) {
+      clearInterval(currentTodo.timer)
     }
   }
-
-*/
+  */
