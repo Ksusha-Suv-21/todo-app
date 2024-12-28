@@ -111,7 +111,7 @@ export default class App extends Component {
       currentTodo.timer = setInterval(() => {
         if (currentTodo.seconds > 0) {
           this.setState(({ todoData }) => {
-            const newArr = todoData
+            const newArr = [...todoData]
             newArr[idIndex].seconds--
             return {
               todoData: newArr,
@@ -119,7 +119,7 @@ export default class App extends Component {
           })
         } else if (currentTodo.minutes > 0) {
           this.setState(({ todoData }) => {
-            const newArr = todoData
+            const newArr = [...todoData]
             newArr[idIndex].seconds = 59
             newArr[idIndex].minutes--
             return {
@@ -135,7 +135,7 @@ export default class App extends Component {
 
   taskOnPause = (id) => {
     this.setState(({ todoData }) => {
-      const newArr = todoData
+      const newArr = [...todoData]
       const idIndex = newArr.findIndex((el) => el.id === id)
 
       if (newArr[idIndex].timer !== null) {
